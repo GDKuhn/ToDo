@@ -4,7 +4,15 @@ function List(props) {
     return (
         <ul>
             {props.itemsFromSetItems.map((item) => (
-                <li>{item}</li>
+                <li key={item.id}>
+                    {item.text}
+                    <button
+                        onClick={() => {
+                            props.onItemDeletedList(item);
+                        }}>
+                        <img alt="bin" src="./assets/bin.png"></img>
+                    </button>
+                </li>
             ))}
         </ul>
     );
