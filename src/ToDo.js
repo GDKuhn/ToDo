@@ -1,34 +1,45 @@
 import React, { useState } from "react";
 import "./ToDo.css";
-import List from "./List";
-import Form from "./Form";
-import Item from "./Item";
+import List from "./components/List";
+import Form from "./components/Form";
+import Item from "./components/Item";
 
 function ToDo() {
-    const [items, setItemsList] = useState([]);
+	const [items, setItemsList] = useState([]);
 
-    function onAddItemToDo(text) {
-        let item = new Item(text);
+	function onAddItem(text) {
+		let item = new Item(text);
 
-        setItemsList([...items, item]);
-    }
+		setItemsList([...items, item]);
+	}
 
-    function onItemDeletedToDo(item) {
-        let filteredItems = items.filter(
-            (itemFromItems) => item.id !== itemFromItems.id
-        );
-        setItemsList(filteredItems);
-    }
+	function onItemDeleted(item) {
+		let filteredItems = items.filter(
+			(itemFromItems) => item.id !== itemFromItems.id
+		);
+		setItemsList(filteredItems);
+	}
 
-    return (
-        <div className="container">
-            <h1>ToDo</h1>
-            <Form onAddItemForm={onAddItemToDo}></Form>
-            <List
-                onItemDeletedList={onItemDeletedToDo}
-                itemsFromSetItems={items}></List>
-        </div>
-    );
+	function onDone(item) {
+		console.log("done");
+		let updatedItems = items.map((itemFromItems) => {
+			if (item.id === itemFromItems.id) {
+				item.done = !item.done;
+			}
+			return itemFromItems;
+		});
+		setItemsList(updatedItems);
+	}
+	return (
+		<div className="container">
+			<h1>ToDo</h1>
+			<Form onAddItem={onAddItem}></Form>
+			<List
+				onDone={onDone}
+				onItemDeleted={onItemDeleted}
+				itemsFromSetItems={items}></List>
+		</div>
+	);
 }
 
 export default ToDo;
