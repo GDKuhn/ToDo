@@ -5,28 +5,10 @@ import listReducer from "./reducers/listReducer";
 import "./ToDo.css";
 import List from "./components/List";
 import Form from "./components/Form";
+
 import Modal from "./components/Modal";
 
-const SAVED_ITEMS = "savedItems";
-
-function persistState(state) {
-	localStorage.setItem(SAVED_ITEMS, JSON.stringify(state));
-}
-
-function loadState() {
-	const actualState = localStorage.getItem(SAVED_ITEMS);
-	if (actualState) {
-		return JSON.parse(actualState);
-	} else {
-		return [];
-	}
-}
-
-const store = createStore(listReducer, loadState());
-
-store.subscribe(() => {
-	persistState(store.getState());
-});
+const store = createStore(listReducer);
 
 function App() {
 	const [showModal, setShowModal] = useState(false);
@@ -44,8 +26,7 @@ function App() {
 						onClick={() => {
 							setShowModal(true);
 						}}
-						className="addButton"
-					>
+						className="addButton">
 						+
 					</button>
 				</header>
