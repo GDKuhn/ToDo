@@ -1,13 +1,15 @@
 import React, { useState } from "react";
+import { addItem } from "../actions/listActions";
+import { useDispatch } from "react-redux";
 
 function Form(props) {
 	const [text, setText] = useState("");
+	const dispatch = useDispatch(props.dispatch);
 
-	function addItem(event) {
+	function addItemEvent(event) {
 		event.preventDefault();
 		if (text) {
-			// setItemsList([...itemsOnToDo, text]);
-			props.onAddItem(text);
+			dispatch(addItem(text));
 			setText("");
 		}
 	}
@@ -20,7 +22,7 @@ function Form(props) {
 	return (
 		<form className="input">
 			<input onChange={handleChange} type="text" value={text}></input>
-			<button onClick={addItem}>Add</button>
+			<button onClick={addItemEvent}>Add</button>
 		</form>
 	);
 }
